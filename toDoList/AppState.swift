@@ -6,37 +6,50 @@
 //
 
 import ComposableArchitecture
+import SwiftUI
 
 
 struct AppState: Equatable {
-  var toDos: IdentifiedArrayOf<TodoState> = []
+  var todos: IdentifiedArrayOf<TodoState> = []
+  var showComplete = true
 }
 
 enum AppAction: Equatable {
-case toDos(id: TodoState.ID, action: TodoAction)
-case addToDo
+  case todos(id: TodoState.ID, action: TodoAction)
+  case addTodo
+  case clearTodo
+  case toggleShowComplete
 }
 
 struct AppEnvironment {}
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
   toDoReducer.forEach(
-    state: \.toDos,
-    action: /AppAction.toDos(id:action:),
+    state: \.todos,
+    action: /AppAction.todos(id:action:),
     environment: { _ in .init() }
   ),
   Reducer { state, action, environment in
     switch action {
       
-    case let .toDos(id, action: .deleteButtonTapped):
-      state.toDos.remove(id: id)
+    case .toggleShowComplete:
+      state.showComplete.toggle()
+//      state.toDos.toggle
       return .none
       
-    case .toDos:
+    case .clearTodo:
+      state.todos.removeAll()
       return .none
       
-    case .addToDo:
-      state.toDos.append(
+    case let .todos(id, action: .deleteButtonTapped):
+      state.todos.remove(id: id)
+      return .none
+      
+    case .todos:
+      return .none
+      
+    case .addTodo:
+      state.todos.append(
         TodoState(
           name: "Untitled",
           complete: false
@@ -44,11 +57,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
       return .none
     }
   }
-)
+) .debug()
 
 extension AppState {
   static let defaultStore = Store(
-    initialState: AppState(toDos: [
+    initialState: AppState(todos: [
       TodoState(
         name: "New To Do",
         complete: false

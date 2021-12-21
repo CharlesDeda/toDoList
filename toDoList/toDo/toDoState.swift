@@ -17,6 +17,7 @@ struct TodoState: Identifiable, Equatable {
 enum TodoAction: Equatable {
   case updateName(String)
   case deleteButtonTapped
+  case toggleComplete
 }
 
 struct TodoEnvironment {
@@ -35,6 +36,10 @@ let toDoReducer = Reducer<
     return .none
     
   case .deleteButtonTapped:
+    return .none
+    
+  case .toggleComplete:
+    state.complete.toggle()
     return .none
     
   }
