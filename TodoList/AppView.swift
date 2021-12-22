@@ -15,14 +15,14 @@ struct AppView: View {
     WithViewStore(store) { viewStore in
       NavigationView {
         ScrollView {
-            ForEachStore(store.scope(
-              state: \.filteredTodos,
-              action: AppAction.todos
-            )) { childStore in
-              WithViewStore(childStore) { childViewStore in
-                ToDoView(store: childStore)
-              }
+          ForEachStore(store.scope(
+            state: \.filteredTodos,
+            action: AppAction.todos
+          )) { childStore in
+            WithViewStore(childStore) { childViewStore in
+              ToDoView(store: childStore)
             }
+          }
         }
         .navigationTitle("Sigma Grind")
         .toolbar {
@@ -32,21 +32,14 @@ struct AppView: View {
                 Label("Add", systemImage: "plus")
               }
               Button(action: { viewStore.send(.toggleShowComplete) }) {
-                Label(viewStore.showComplete ? "Hide" : "Show", systemImage: viewStore.showComplete ? "eye.slash" : "eye")
+                Label(viewStore.showComplete ? "Hide" : "Show", systemImage:viewStore.showComplete ? "eye.slash" : "eye")
               }
               Button(action: { viewStore.send(.clearTodo) }) {
                 Label("Clear", systemImage: "trash")
               }
             }
           label: {
-            Label(
-              title: {
-                Text("add")
-              },
-              icon: {
-                Image(systemName: "ellipsis.circle")
-              }
-            )
+            Label("Add", systemImage: "ellipsis.circle")
           }
           }
         }

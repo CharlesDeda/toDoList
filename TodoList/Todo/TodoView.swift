@@ -34,7 +34,8 @@ struct ToDoView: View {
             .disabled(viewStore.complete)
             .opacity(viewStore.complete ? 0.5 : 1)
         }
-        .padding()
+        .padding(.horizontal)
+        .padding(.vertical, 8)
       }
     }
   }
