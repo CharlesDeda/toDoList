@@ -20,7 +20,7 @@ struct ToDoView: View {
           Image.init(systemName: viewStore.complete ? "checkmark" : "circle")
             .resizable()
             .scaledToFit()
-            .frame(width: 30, height: 30)
+            .frame(width: 20, height: 20)
         }
         TextField(
           "Untitled",
@@ -31,8 +31,10 @@ struct ToDoView: View {
         )
           .disabled(viewStore.complete)
           .opacity(viewStore.complete ? 0.5 : 1)
-        Button("Delete") {
+        Button {
           viewStore.send(.deleteButtonTapped)
+        } label: {
+          Image(systemName: "trash")
         }
       }
     }

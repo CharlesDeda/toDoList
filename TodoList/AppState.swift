@@ -24,7 +24,7 @@ enum AppAction: Equatable {
 struct AppEnvironment {}
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
-  toDoReducer.forEach(
+  TodoReducer.forEach(
     state: \.todos,
     action: /AppAction.todos(id:action:),
     environment: { _ in .init() }
@@ -63,7 +63,7 @@ extension AppState {
   static let defaultStore = Store(
     initialState: AppState(todos: [
       TodoState(
-        name: "New To Do",
+        name: "Grind 5eva",
         complete: false
       )
     ]),

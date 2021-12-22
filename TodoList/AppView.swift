@@ -14,25 +14,23 @@ struct AppView: View {
   var body: some View {
     WithViewStore(store) { viewStore in
       NavigationView {
-        ScrollView {
-          ForEachStore(store.scope(
-            state: \.todos,
-            action: AppAction.todos
-          )) { childStore in
-            WithViewStore(childStore) { childViewStore in
+        Form {
+          Section("Sigma Grindset") {
+            ForEachStore(store.scope(
+              state: \.todos,
+              action: AppAction.todos
+            )) { childStore in
+              WithViewStore(childStore) { childViewStore in
                 ToDoView(store: childStore)
-                .opacity(!viewStore.showComplete && childViewStore.complete ? 0 : 1)
-              // when the task is completed and the hide button is toggled, the completed tasks should be hidden
-              // todo = childViewStore
-              // app = viewStore
-              //
+                  .opacity(!viewStore.showComplete && childViewStore.complete ? 0 : 1)
+              }
             }
           }
         }
-        .navigationTitle("To Do List")
+        .navigationTitle("Sigma Grind")
         .toolbar {
           ToolbarItem(placement: .primaryAction) {
-            Menu("Menu") {
+            Menu {
               Button("New") {
                 viewStore.send(.addTodo)
               }
@@ -43,9 +41,20 @@ struct AppView: View {
                 viewStore.send(.clearTodo)
               }
             }
+          label: {
+            Label(
+              title: {
+                Text("add")
+              },
+              icon: {
+                Image(systemName: "plus")
+              }
+            )
+          }
           }
         }
       }
+      .preferredColorScheme(.dark)
     }
   }
 }

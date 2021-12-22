@@ -23,7 +23,7 @@ enum TodoAction: Equatable {
 struct TodoEnvironment {
 }
 
-let toDoReducer = Reducer<
+let TodoReducer = Reducer<
   TodoState,
   TodoAction,
   TodoEnvironment
@@ -51,7 +51,7 @@ extension TodoState {
       name: "Doctors Appointment",
       complete: Bool(true
                     )),
-    reducer: toDoReducer,
+    reducer: TodoReducer,
     environment: TodoEnvironment()
   )
 }
