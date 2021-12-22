@@ -13,29 +13,28 @@ struct ToDoView: View {
   
   var body: some View {
     WithViewStore(store) { viewStore in
-      HStack {
-        Button(action: {
-          viewStore.send(.toggleComplete)
-        }) {
-          Image.init(systemName: viewStore.complete ? "checkmark" : "circle")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 20, height: 20)
-        }
-        TextField(
-          "Untitled",
-          text: viewStore.binding(
-            get: \.name,
-            send: TodoAction.updateName
+      VStack {
+        Divider()
+        HStack {
+          Button(action: {
+            viewStore.send(.toggleComplete)
+          }) {
+            Image.init(systemName: viewStore.complete ? "record.circle" : "circle")
+              .resizable()
+              .scaledToFit()
+              .frame(width: 20, height: 20)
+          }
+          TextField(
+            "Untitled",
+            text: viewStore.binding(
+              get: \.name,
+              send: TodoAction.updateName
+            )
           )
-        )
-          .disabled(viewStore.complete)
-          .opacity(viewStore.complete ? 0.5 : 1)
-        Button {
-          viewStore.send(.deleteButtonTapped)
-        } label: {
-          Image(systemName: "trash")
+            .disabled(viewStore.complete)
+            .opacity(viewStore.complete ? 0.5 : 1)
         }
+        .padding()
       }
     }
   }

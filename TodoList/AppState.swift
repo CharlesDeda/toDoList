@@ -12,6 +12,9 @@ import SwiftUI
 struct AppState: Equatable {
   var todos: IdentifiedArrayOf<TodoState> = []
   var showComplete = true
+  var filteredTodos: IdentifiedArrayOf<TodoState> {
+    showComplete ? todos : todos.filter { !$0.complete }
+  }
 }
 
 enum AppAction: Equatable {
