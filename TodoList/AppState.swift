@@ -66,7 +66,7 @@ extension AppState {
   static let defaultStore = Store(
     initialState: AppState(todos: [
       TodoState(
-        name: "Grind 5eva",
+        name: "-",
         complete: false
       )
     ]),

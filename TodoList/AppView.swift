@@ -24,7 +24,7 @@ struct AppView: View {
             }
           }
         }
-        .navigationTitle("Sigma Grind")
+        .navigationTitle("ToDoList")
         .toolbar {
           ToolbarItem(placement: .primaryAction) {
             Menu {
